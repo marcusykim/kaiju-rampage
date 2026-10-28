@@ -1218,7 +1218,6 @@ final class GameScene: SKScene {
         }
 
         // Buildings row
-        var x: CGFloat = 170
         var index = 0
         // First pass: lay out widths to know where the middle (landmark) lands.
         var layout: [(width: CGFloat, height: CGFloat)] = []
@@ -3768,7 +3767,7 @@ final class GameScene: SKScene {
         teeth.strokeColor = .clear
         snitch.addChild(teeth)
         for (dx, dy) in [(-20, 86), (19, 64)] as [(CGFloat, CGFloat)] {
-            let sparkle = makeLabel("✦", size: 12, pos: CGPoint(x: dx, y: dy), color: gold)
+            let sparkle = makeLabel("✦", size: 12, color: gold, pos: CGPoint(x: dx, y: dy))
             snitch.addChild(sparkle)
         }
 
