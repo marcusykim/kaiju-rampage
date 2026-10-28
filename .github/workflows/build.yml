@@ -1,0 +1,26 @@
+name: Build Kaiju Rampage (macOS)
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run unit tests
+        run: swift test
+
+      - name: Build KaijuRampage.app
+        run: |
+          chmod +x packaging/build-app.sh
+          ./packaging/build-app.sh . KaijuRampage "Kaiju Rampage" com.marcusykim.kaijurampage
+
+      - name: Upload app zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: KaijuRampage-app
+          path: dist/KaijuRampage-macOS.zip
+          retention-days: 30
