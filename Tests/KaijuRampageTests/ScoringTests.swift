@@ -71,8 +71,8 @@ final class ScoringTests: XCTestCase {
         // Every city's crowd is drawn from its own demographic mix —
         // weighted skin tones, local clothes, and its street density.
         for city in CityKind.allCases {
-            XCTAssertGreaterThanOrEqualTo(city.crowdSkin.count, 6, city.name)
-            XCTAssertGreaterThanOrEqualTo(city.crowdClothes.count, 4, city.name)
+            XCTAssertGreaterThanOrEqual(city.crowdSkin.count, 6, city.name)
+            XCTAssertGreaterThanOrEqual(city.crowdClothes.count, 4, city.name)
             XCTAssertTrue((18...36).contains(city.crowdDensity), city.name)
         }
         // No two cities share the exact same skin mix — Tokyo is not Rio.
@@ -84,7 +84,7 @@ final class ScoringTests: XCTestCase {
         XCTAssertLessThan(lum.min()!, 0.30)
         XCTAssertGreaterThan(lum.max()!, 0.75)
         // Density tracks real crowding: Tokyo/Shanghai top the table.
-        XCTAssertGreaterThanOrEqualTo(CityKind.tokyo.crowdDensity, 32)
+        XCTAssertGreaterThanOrEqual(CityKind.tokyo.crowdDensity, 32)
         XCTAssertLessThan(CityKind.sydney.crowdDensity, CityKind.tokyo.crowdDensity)
     }
 
@@ -152,14 +152,14 @@ final class ScoringTests: XCTestCase {
             }
         }
         let widths = MonsterKind.allCases.map { $0.bodyPlan.bodyW }
-        XCTAssertLessThanOrEqualTo(widths.min()!, 80)
-        XCTAssertGreaterThanOrEqualTo(widths.max()!, 170)
+        XCTAssertLessThanOrEqual(widths.min()!, 80)
+        XCTAssertGreaterThanOrEqual(widths.max()!, 170)
         let heights = MonsterKind.allCases.map { $0.bodyPlan.bodyH }
-        XCTAssertLessThanOrEqualTo(heights.min()!, 40)
-        XCTAssertGreaterThanOrEqualTo(heights.max()!, 120)
+        XCTAssertLessThanOrEqual(heights.min()!, 40)
+        XCTAssertGreaterThanOrEqual(heights.max()!, 120)
         // Real variety in how they move: at least 4 leg styles in use,
         // and the serpent, worm, ghost, and hover-bot truly have no legs.
-        XCTAssertGreaterThanOrEqualTo(Set(MonsterKind.allCases.map { "\($0.bodyPlan.legs)" }).count, 4)
+        XCTAssertGreaterThanOrEqual(Set(MonsterKind.allCases.map { "\($0.bodyPlan.legs)" }).count, 4)
         for m in [MonsterKind.voltina, .dunemaw, .spectra, .sentinel] {
             XCTAssertEqual(m.bodyPlan.legs, .none, m.name)
         }
@@ -235,22 +235,22 @@ final class ScoringTests: XCTestCase {
         for c in CityKind.allCases {
             XCTAssertFalse(c.buildingNames.isEmpty, c.name)
             XCTAssertFalse(c.landmarkName.isEmpty, c.name)
-            XCTAssertGreaterThanOrEqualTo(c.buildingPalette.count, 3, c.name)
+            XCTAssertGreaterThanOrEqual(c.buildingPalette.count, 3, c.name)
             // The completeness spec: every city ships its real street,
             // parody storefronts, street furniture, and cross streets.
             XCTAssertFalse(c.streetName.isEmpty, c.name)
             XCTAssertFalse(c.district.isEmpty, c.name)
-            XCTAssertGreaterThanOrEqualTo(c.shops.count, 8, c.name)
-            XCTAssertGreaterThanOrEqualTo(c.propEmojis.count, 3, c.name)
-            XCTAssertGreaterThanOrEqualTo(c.crossStreets.count, 3, c.name)
+            XCTAssertGreaterThanOrEqual(c.shops.count, 8, c.name)
+            XCTAssertGreaterThanOrEqual(c.propEmojis.count, 3, c.name)
+            XCTAssertGreaterThanOrEqual(c.crossStreets.count, 3, c.name)
             XCTAssertLessThan(c.minBuildingH, c.maxBuildingH, c.name)
             // Real-scale money: every city carries a realistic total
             // asset value (hundreds of billions at the very least).
-            XCTAssertGreaterThanOrEqualTo(c.destructionValue, 300_000_000_000, c.name)
+            XCTAssertGreaterThanOrEqual(c.destructionValue, 300_000_000_000, c.name)
         }
         // The whole world on the board is worth real money — the
         // catalog's cities sum to at least $100 trillion of assets.
-        XCTAssertGreaterThanOrEqualTo(CityKind.allCases.reduce(0) { $0 + $1.destructionValue },
+        XCTAssertGreaterThanOrEqual(CityKind.allCases.reduce(0) { $0 + $1.destructionValue },
                                       100_000_000_000_000)
         // Marcus's named NYC parodies, spelled his way.
         let nyc = CityKind.newYork
@@ -286,7 +286,7 @@ final class ScoringTests: XCTestCase {
         for (a, b) in zip(Scoring.adMenu, Scoring.adMenu.dropFirst()) {
             XCTAssertGreaterThan(a.seconds, b.seconds)
             XCTAssertGreaterThan(a.payout, b.payout)
-            XCTAssertGreaterThanOrEqualTo(Double(a.payout) / Double(a.seconds),
+            XCTAssertGreaterThanOrEqual(Double(a.payout) / Double(a.seconds),
                                           Double(b.payout) / Double(b.seconds))
         }
     }
